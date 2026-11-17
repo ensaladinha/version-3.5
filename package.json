@@ -1,0 +1,28 @@
+{
+  "name": "pulso",
+  "version": "3.5.0",
+  "description": "Pulso: noticiero de entretenimiento con recomendador por gustos",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "keywords": [
+    "noticias",
+    "música",
+    "videojuegos",
+    "series",
+    "recomendador",
+    "express"
+  ],
+  "scripts": {
+    "start": "node server/server.js",
+    "dev": "node --watch server/server.js",
+    "test": "node --test test/app.test.mjs test/security.test.mjs test/state.test.mjs test/store.test.mjs test/accounts.test.mjs",
+    "smoke": "node scripts/smoke.mjs"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "engines": {
+    "node": "22.x"
+  }
+}

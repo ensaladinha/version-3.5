@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pulso — noticiero de entretenimiento</title>
+<meta name="description" content="Pulso reúne música, videojuegos, series y películas en un solo lugar y te recomienda según tus gustos. Las noticias enlazan siempre a la fuente original.">
+<meta name="theme-color" content="#0f0c1a">
+<meta name="color-scheme" content="dark">
+<meta property="og:type" content="website"><meta property="og:site_name" content="Pulso">
+<meta property="og:title" content="Pulso — noticiero de entretenimiento">
+<meta property="og:description" content="Música, juegos, series y películas elegidos según tus gustos.">
+<meta property="og:image" content="icons/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="stylesheet" href="css/style.css">
+<link rel="preconnect" href="https://is1-ssl.mzstatic.com" crossorigin><link rel="preconnect" href="https://cdn.akamai.steamstatic.com" crossorigin>
+<link rel="modulepreload" href="js/app.js"><link rel="modulepreload" href="js/util.js"><link rel="modulepreload" href="js/state.js"><link rel="modulepreload" href="js/auth.js"><link rel="modulepreload" href="js/dialog.js"><link rel="modulepreload" href="js/player.js"><link rel="modulepreload" href="js/cards.js"><link rel="modulepreload" href="js/views.js"><link rel="modulepreload" href="js/onboarding.js"><link rel="modulepreload" href="js/recommender.js"><link rel="modulepreload" href="js/shared.js"><link rel="modulepreload" href="js/platforms.js">
+</head>
+<body data-sec="home">
+<a class="skip" href="#view">Saltar al contenido</a>
+<noscript><p class="notice">Pulso necesita JavaScript para funcionar.</p></noscript>
+<div id="auth" hidden></div>
+<header>
+  <a class="logo" href="#/" aria-label="Pulso, ir al inicio"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12h4l3-8 4 16 3-8h6"/></svg> Pulso</a>
+  <nav id="nav" aria-label="Secciones">
+    <a href="#/" data-s="home">Inicio</a><a href="#/music" data-s="music">Música</a>
+    <a href="#/games" data-s="games">Juegos</a><a href="#/media" data-s="media">Series</a>
+  </nav>
+  <div class="gs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="gs" type="search" placeholder="Buscar canciones, juegos, series…" aria-label="Buscar en Pulso" autocomplete="off" enterkeyhint="search"></div>
+  <div class="acct"><button type="button" id="login" class="hbtn" hidden>Acceder</button>
+  <a class="pf" href="#/profile" aria-label="Perfil y gustos"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></a></div>
+</header>
+<main id="view" tabindex="-1" aria-busy="true"></main>
+<div id="modal" hidden></div>
+<div id="dock">
+  <div id="ytbox" hidden><button id="ytm" aria-label="Minimizar video">–</button><div id="yt-player"></div></div>
+  <audio id="aud" preload="none"></audio>
+  <div class="pl">
+    <div class="lf"><img id="cov" alt="" hidden><span id="cv"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></span><div class="meta"><b id="now">Nada sonando</b><small id="art">Tocá reproducir para escuchar</small></div></div>
+    <div class="ctl"><button id="prev" aria-label="Anterior"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 20 9 12l10-8z" fill="currentColor"/><path d="M5 19V5"/></svg></button><button id="tog" class="big" aria-label="Reproducir o pausar"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4.5v15l12.5-7.5z" fill="currentColor"/></svg></button><button id="next" aria-label="Siguiente"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 4 10 8-10 8z" fill="currentColor"/><path d="M19 5v14"/></svg></button><button type="button" id="full" class="fullbtn" title="Abrir la canción completa en Spotify, YouTube Music, Apple Music…">Completa <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg><span class="sr">: escuchar la canción completa en otra app</span></button></div>
+    <div class="prog"><span id="tc">0:00</span><div id="pb" role="slider" aria-label="Progreso de la canción" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0"><i id="pbf"></i></div><span id="td">0:00</span></div>
+  </div>
+</div>
+<div id="toast" role="status" aria-live="polite"></div>
+<script type="module" src="js/app.js"></script>
+<footer>Datos de películas: iTunes. Series: TVmaze (CC BY-SA). Videojuegos: Steam. Música: iTunes y YouTube. Las noticias enlazan siempre a la fuente original. <a href="privacidad.html">Privacidad</a></footer>
+</body>
+</html>
